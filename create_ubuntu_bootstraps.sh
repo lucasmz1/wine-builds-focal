@@ -66,13 +66,13 @@ prepare_chroot () {
 }
 
 create_build_scripts () {
-	sdl2_version="2.26.4"
-	faudio_version="23.03"
+	sdl2_version="2.30.3"
+	faudio_version="24.05"
 	vulkan_headers_version="1.3.239"
-	vulkan_loader_version="1.3.239"
-	spirv_headers_version="sdk-1.3.239.0"
+	vulkan_loader_version="1.3.285"
+	spirv_headers_version="sdk-1.3.283.0"
  	libpcap_version="1.10.4"
-  	libxkbcommon_version="1.6.0"
+  	libxkbcommon_version="1.7.0"
 
 	cat <<EOF > "${MAINDIR}"/prepare_chroot.sh
 #!/bin/bash
