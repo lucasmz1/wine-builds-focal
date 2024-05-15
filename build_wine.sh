@@ -89,9 +89,9 @@ export BOOTSTRAP_X64=/opt/chroots/bionic64_chroot
 export BOOTSTRAP_X32=/opt/chroots/bionic32_chroot
 
 export scriptdir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
-
-export CC="gcc-9"
-export CXX="g++-9"
+GCC=$(gcc --version | awk '{print $4}' | head -n 1)
+export CC="gcc-$GCC"
+export CXX="g++-$GCC"
 
 export CROSSCC_X32="i686-w64-mingw32-gcc"
 export CROSSCXX_X32="i686-w64-mingw32-g++"
