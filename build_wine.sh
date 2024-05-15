@@ -89,7 +89,7 @@ export BOOTSTRAP_X64=/opt/chroots/focal64_chroot
 export BOOTSTRAP_X32=/opt/chroots/focal32_chroot
 
 export scriptdir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
-GCC=$(gcc --version | awk '{print $4}' | head -n 1)
+GCC=$(gcc --version | awk 'NR==1{print $3}' | cut -d. -f1)
 export CC="gcc-$GCC"
 export CXX="g++-$GCC"
 
