@@ -32,7 +32,7 @@ jobs:
 
       - name: Prerequisites
         run: |
-          sudo apt update
+          sudo apt update && sudo apt upgrade -y
           sudo apt install debootstrap schroot perl git wget xz-utils bubblewrap autoconf
           chmod +x create_ubuntu_bootstraps.sh
           sudo ./create_ubuntu_bootstraps.sh
