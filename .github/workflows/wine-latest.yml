@@ -1,0 +1,56 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Wine-latest CI
+
+# Controls when the action will run. 
+on:
+  # Build at 00:00 on every 12th day-of-month.
+  schedule:
+    - cron: "0 0 */12 * *"
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ main ]
+    paths-ignore: [ '**/README.md' ]
+  pull_request:
+    branches: [ main ]
+    paths-ignore: [ '**/README.md' ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build-stable"
+  build-latest:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-20.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      - name: Prerequisites
+        run: |
+          sudo apt update
+          sudo apt install debootstrap schroot perl git wget xz-utils bubblewrap autoconf
+          chmod +x create_ubuntu_bootstraps.sh
+          sudo ./create_ubuntu_bootstraps.sh
+          chmod +x build_wine.sh
+          export WINE_VERSION="latest"
+          WINE_BRANCH=staging ./build_wine.sh
+          sha256sum *.tar.xz
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Wine-latest
+          path: ./*.tar.xz
+
+      - name: Build release
+        uses: marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303
+        with:
+          title: wine-builds latest
+          automatic_release_tag: latest
+          prerelease: false
+          draft: false
+          files: ./*.tar.xz
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
