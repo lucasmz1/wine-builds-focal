@@ -222,7 +222,7 @@ elif [ "$WINE_BRANCH" = "wayland" ]; then
                                --without-xrandr --without-xrender \
                                --without-xshape --without-xshm  \
                                --without-xslt --without-xxf86vm \
-                               --without-xcursor --without-opengl \
+                               --without-xcursor \
                                ${WINE_BUILD_OPTIONS}"
 elif [ "$WINE_BRANCH" = "proton" ]; then
 	if [ -z "${PROTON_BRANCH}" ]; then
